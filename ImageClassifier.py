@@ -11,9 +11,9 @@ def compare_images(image1, image2):
   img1 = cv2.imread(image1, 0)
   img2 = cv2.imread(image2, 0)
 
-  orb = cv2.ORB_create()
-  kp1, des1 = orb.detectAndCompute(img1, None)
-  kp2, des2 = orb.detectAndCompute(img2, None)
+  sift = cv2.SIFT_create()
+  kp1, des1 = sift.detectAndCompute(img1, None)
+  kp2, des2 = sift.detectAndCompute(img2, None)
 
   bf = cv2.BFMatcher()
   matches = bf.knnMatch(des1, des2, k=2)
@@ -22,7 +22,7 @@ def compare_images(image1, image2):
   for m, n in matches:
     if m.distance < 0.75*n.distance:
       good.append([m])
-  if len(good)>13:
+  if len(good)>95:
     matched = True
   print(len(good))
   img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, good, None, flags=2)
