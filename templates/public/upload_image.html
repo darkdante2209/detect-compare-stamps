@@ -1,0 +1,39 @@
+{% extends "public/templates/public_template.html" %}
+
+{% block title %}Upload{% endblock %}
+
+{% block main %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <h1>Upload an image</h1>
+      <hr>
+
+      <form action="/upload-image-1" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label>Select image</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" name="image" id="image">
+            <input type="file" class="custom-file-input" name="image2" id="image2">
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Upload</button>
+
+      </form>
+      <div>{{ upload_message }}</div>
+
+
+<!--      <form action="/detect-and-matching" method="post">-->
+<!--        <button name="forwardBtn" type="submit">Test</button>-->
+<!--      </form>-->
+      <img src="{{ matching_image }}">
+      <div>{{ message }}</div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
