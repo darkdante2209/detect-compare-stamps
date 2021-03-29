@@ -6,11 +6,11 @@ from tensorflow.compat.v1 import ConfigProto
 import os
 import glob2
 from PIL import Image
+
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 physical_devices = tf.config.experimental.list_physical_devices('GPU')
 if len(physical_devices) > 0:
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
-
 
 # Config YOLO variable:
 YOLO_CLASSES = 'data/classes/yolo.names'
@@ -19,11 +19,12 @@ images_resize = 416
 model_weights = 'data/weights/yolo-custom'
 iou_threshold = 0.45
 score_threshold = 0.50
-output_folder = 'static/detected'
+
 
 def get_anchors(anchors_path):
     anchors = np.array(anchors_path)
     return anchors.reshape(3, 3, 2)
+
 
 def read_class_names(class_file_name):
     names = {}
@@ -32,12 +33,14 @@ def read_class_names(class_file_name):
             names[ID] = name.strip('\n')
     return names
 
-def crop_objects(img_original_name, img, data, path, allowed_classes):
+
+def crop_objects(img_original_name, output_folder, img, data, path, allowed_classes):
     boxes, scores, classes, num_objects = data
     class_names = read_class_names(YOLO_CLASSES)
-    #create dictionary to hold count of objects for image name
+    # create dictionary to hold count of objects for image name
     counts = dict()
-    img_name=''
+    img_name = ''
+    stamp_name = ''
     for i in range(num_objects):
         # get count of class for part of image name
         class_index = int(classes[i])
@@ -47,14 +50,16 @@ def crop_objects(img_original_name, img, data, path, allowed_classes):
             # get box coords
             xmin, ymin, xmax, ymax = boxes[i]
             # crop detection from image (take an additional 5 pixels around all edges)
-            cropped_img = img[int(ymin)-5:int(ymax)+5, int(xmin)-5:int(xmax)+5]
+            cropped_img = img[int(ymin) - 5:int(ymax) + 5, int(xmin) - 5:int(xmax) + 5]
             # construct image name and join it to path for saving crop properly
-            img_name = output_folder+'/stamp_detected_'+img_original_name
+            stamp_name = 'stamp_detected_' + img_original_name
+            img_name = output_folder + '/' + stamp_name
             # save image
             cv2.imwrite(img_name, cropped_img)
         else:
-            img_name = 'cant_detected'
-    return img_name
+            continue
+    return img_name, stamp_name
+
 
 def format_boxes(bboxes, image_height, image_width):
     for box in bboxes:
@@ -64,6 +69,7 @@ def format_boxes(bboxes, image_height, image_width):
         xmax = int(box[3] * image_width)
         box[0], box[1], box[2], box[3] = xmin, ymin, xmax, ymax
     return bboxes
+
 
 def main():
     config = ConfigProto()
@@ -134,12 +140,16 @@ def main():
         # image = Image.fromarray(image.astype(np.uint8))
         # image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
         # cv2.imwrite(output_folder+'/'+image_original_name, image)
+
+
 def load_model():
     # load model
     saved_model_loaded = tf.saved_model.load(model_weights, tags=[tag_constants.SERVING])
     return saved_model_loaded
 
-def detect_and_crop(image_input, saved_model_loaded):
+
+def detect_and_crop(image_input, saved_model_loaded, output_folder):
+    output_folder = output_folder
     config = ConfigProto()
     config.gpu_options.allow_growth = True
     input_size = images_resize
@@ -186,7 +196,8 @@ def detect_and_crop(image_input, saved_model_loaded):
     class_names = read_class_names(YOLO_CLASSES)
     allowed_classes = list(class_names.values())
     crop_path = os.path.join(os.getcwd(), 'detections', 'crop', image_name)
-    new_image_name = crop_objects(image_original_name, cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB), pred_bbox, crop_path, allowed_classes)
-    return new_image_name
+    new_image_name, stamp_name = crop_objects(image_original_name, output_folder, cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB),
+                                  pred_bbox, crop_path, allowed_classes)
+    return new_image_name, stamp_name
 # if __name__ == '__main__':
 #     main()

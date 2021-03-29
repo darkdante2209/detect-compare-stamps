@@ -7,7 +7,7 @@ import time
 
 image1 = 'detected/stamp_detected_daihoccantho1.jpeg'
 image2 = 'detected/stamp_detected_daihoccantho2.jpeg'
-def compare_images(image1, image2):
+def compare_images(image1, image2, output_folder):
   img1 = cv2.imread(image1, 0)
   img2 = cv2.imread(image2, 0)
 
@@ -37,11 +37,14 @@ def compare_images(image1, image2):
     img3 = cv2.drawMatchesKnn(img2, kp2, img1, kp1, good_ex, None, flags=2)
   else:
     img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, good, None, flags=2)
-  timestr = time.strftime("%Y%m%d-%H%M%S")
-  matching_image = 'static/matching_img/'+str(timestr)+'.png'
+  # timestr = time.strftime("%Y%m%d-%H%M%S")
+  timestr = time.time()
+  matching_image_name = str(timestr)+'.png'
+  matching_image = str(output_folder)+'/'+matching_image_name
+
   cv2.imwrite(matching_image, img3)
   print(matched)
-  return matched, matching_image
+  return matched, matching_image_name
 
 if __name__ == '__main__':
     compare_images(image1, image2)

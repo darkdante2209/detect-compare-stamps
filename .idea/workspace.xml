@@ -6,11 +6,11 @@
       <change beforePath="$PROJECT_DIR$/DetectAndCrop.py" beforeDir="false" afterPath="$PROJECT_DIR$/DetectAndCrop.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ImageClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/ImageClassifier.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MatchingAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/MatchingAPI.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/matchingWithSIFT.py" beforeDir="false" afterPath="$PROJECT_DIR$/matchingWithSIFT.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/static/detected/stamp_detected_image1.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/static/detected/stamp_detected_image2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/upload/image1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/upload/image2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/stamp_detected_image1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/upload/image2.png" beforeDir="false" afterPath="$PROJECT_DIR$/static/upload/image2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/public/upload_image.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/public/upload_image.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,6 +51,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\PycharmProjects\MatchingImage\static\upload" />
       <recent name="D:\PycharmProjects\MatchingImage\static" />
     </key>
   </component>
