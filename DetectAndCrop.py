@@ -14,7 +14,7 @@ if len(physical_devices) > 0:
 
 # Config YOLO variable:
 YOLO_CLASSES = 'data/classes/yolo.names'
-images_input = 'raw_image'
+images_input = 'tested'
 images_resize = 416
 model_weights = 'data/weights/yolo-custom'
 iou_threshold = 0.45
@@ -37,6 +37,7 @@ def crop_objects(img_original_name, img, data, path, allowed_classes):
     class_names = read_class_names(YOLO_CLASSES)
     #create dictionary to hold count of objects for image name
     counts = dict()
+    img_name=''
     for i in range(num_objects):
         # get count of class for part of image name
         class_index = int(classes[i])
@@ -52,7 +53,7 @@ def crop_objects(img_original_name, img, data, path, allowed_classes):
             # save image
             cv2.imwrite(img_name, cropped_img)
         else:
-            continue
+            img_name = 'cant_detected'
     return img_name
 
 def format_boxes(bboxes, image_height, image_width):
@@ -130,7 +131,6 @@ def main():
         crop_path = os.path.join(os.getcwd(), 'detections', 'crop', image_name)
         crop_objects(image_original_name, cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB), pred_bbox, crop_path,
                      allowed_classes)
-
         # image = Image.fromarray(image.astype(np.uint8))
         # image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
         # cv2.imwrite(output_folder+'/'+image_original_name, image)
@@ -145,9 +145,6 @@ def detect_and_crop(image_input, saved_model_loaded):
     input_size = images_resize
 
     saved_model_loaded = saved_model_loaded
-
-    print(type(saved_model_loaded))
-    print(saved_model_loaded)
 
     re_name = image_input.replace("\\", "/")
     print(image_input)
@@ -172,7 +169,6 @@ def detect_and_crop(image_input, saved_model_loaded):
     for key, value in pred_bbox.items():
         boxes = value[:, :, 0:4]
         pred_conf = value[:, :, 4:]
-
     # run non max suppression on detections
     boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
         boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
@@ -186,15 +182,11 @@ def detect_and_crop(image_input, saved_model_loaded):
 
     original_h, original_w, _ = original_image.shape
     bboxes = format_boxes(boxes.numpy()[0], original_h, original_w)
-
     pred_bbox = [bboxes, scores.numpy()[0], classes.numpy()[0], valid_detections.numpy()[0]]
-
     class_names = read_class_names(YOLO_CLASSES)
-
     allowed_classes = list(class_names.values())
-
     crop_path = os.path.join(os.getcwd(), 'detections', 'crop', image_name)
     new_image_name = crop_objects(image_original_name, cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB), pred_bbox, crop_path, allowed_classes)
     return new_image_name
-if __name__ == '__main__':
-    detect_and_crop()
+# if __name__ == '__main__':
+#     main()

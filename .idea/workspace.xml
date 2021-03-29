@@ -3,7 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="8ff26817-b8e2-4321-ba25-490a5a280ee7" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DetectAndCrop.py" beforeDir="false" afterPath="$PROJECT_DIR$/DetectAndCrop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ImageClassifier.py" beforeDir="false" afterPath="$PROJECT_DIR$/ImageClassifier.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MatchingAPI.py" beforeDir="false" afterPath="$PROJECT_DIR$/MatchingAPI.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/matchingWithSIFT.py" beforeDir="false" afterPath="$PROJECT_DIR$/matchingWithSIFT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/detected/stamp_detected_image1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/detected/stamp_detected_image2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/upload/image1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/upload/image2.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -156,9 +163,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.MatchingAPI" />
+        <item itemvalue="Python.DetectAndCrop" />
         <item itemvalue="Python.matchingWithSIFT" />
         <item itemvalue="Python.ImageClassifier" />
-        <item itemvalue="Python.DetectAndCrop" />
       </list>
     </recent_temporary>
   </component>

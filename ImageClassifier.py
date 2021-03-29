@@ -17,15 +17,26 @@ def compare_images(image1, image2):
 
   bf = cv2.BFMatcher()
   matches = bf.knnMatch(des1, des2, k=2)
+  matches_ex = bf.knnMatch(des2, des1, k=2)
   good = []
+  good_ex = []
   matched = False
   for m, n in matches:
     if m.distance < 0.75*n.distance:
       good.append([m])
+  for m, n in matches_ex:
+    if m.distance < 0.75*n.distance:
+      good_ex.append([m])
   if len(good)>95:
     matched = True
-  print(len(good))
-  img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, good, None, flags=2)
+    print(len(good))
+    img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, good, None, flags=2)
+  elif len(good_ex)>95:
+    matched = True
+    print(len(good_ex))
+    img3 = cv2.drawMatchesKnn(img2, kp2, img1, kp1, good_ex, None, flags=2)
+  else:
+    img3 = cv2.drawMatchesKnn(img1, kp1, img2, kp2, good, None, flags=2)
   timestr = time.strftime("%Y%m%d-%H%M%S")
   matching_image = 'static/matching_img/'+str(timestr)+'.png'
   cv2.imwrite(matching_image, img3)

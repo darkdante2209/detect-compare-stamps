@@ -47,11 +47,27 @@ def predict(image1, image2):
 
     stamp_1 = detect_and_crop(image1, saved_model_loaded)
     stamp_2 = detect_and_crop(image2, saved_model_loaded)
-
     # Compare 2 stamp if matching
+    if stamp_1 == '' and stamp_2 == '':
+        result = 'false_allstamp'
+        matched = ''
+        matching_image = ''
+        return result, matched, matching_image
+    elif stamp_1 == '':
+        result = 'false_stamp1'
+        matched = ''
+        matching_image = ''
+        return result, matched, matching_image
+    elif stamp_2 == '':
+        result = 'false_stamp2'
+        matched = ''
+        matching_image = ''
+        return result, matched, matching_image
+    else:
+        result = 'true'
+        matched, matching_image = compare_images(stamp_1, stamp_2)
+        return result, matched, matching_image
 
-    matched, matching_image = compare_images(stamp_1, stamp_2)
-    return matched, matching_image
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -72,15 +88,23 @@ def upload1():
             images.save(image1)
             images2 = request.files["image2"]
             images2.save(image2)
-    matched, matching_image = predict(image1, image2)
-    if (matched == True):
-        # return redirect(url_for('index', matching_image=matching_image, message="Hai con dấu hoàn toàn trùng khớp"))
-        return render_template("public/upload_image.html", matching_image=matching_image,
-                               message="Hai con dấu hoàn toàn trùng khớp")
+    result, matched, matching_image = predict(image1, image2)
+    if result == 'false_allstamp':
+        return render_template("public/upload_image.html", message="Không phát hiện được con dấu trong cả hai ảnh")
+    elif result == 'false_stamp1':
+        return render_template("public/upload_image.html", message="Không phát hiện được con dấu trong ảnh thứ nhất")
+    elif result == 'false_stamp2':
+        return render_template("public/upload_image.html", message="Không phát hiện được con dấu trong ảnh thứ hai")
     else:
-        # return redirect(url_for('index', matching_image=matching_image, message="Hai con dấu khác nhau"))
-        return render_template("public/upload_image.html", matching_image=matching_image,
-                               message="Hai con dấu khác nhau")
+        if (matched == True):
+            # return redirect(url_for('index', matching_image=matching_image, message="Hai con dấu hoàn toàn trùng khớp"))
+            return render_template("public/upload_image.html", matching_image=matching_image,
+                                   message="Hai con dấu hoàn toàn trùng khớp")
+        else:
+            # return redirect(url_for('index', matching_image=matching_image, message="Hai con dấu khác nhau"))
+            return render_template("public/upload_image.html", matching_image=matching_image,
+                                   message="Hai con dấu khác nhau")
+
 
 if __name__ == '__main__':
     app.run(debug=True)
