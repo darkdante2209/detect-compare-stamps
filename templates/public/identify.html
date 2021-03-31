@@ -1,0 +1,47 @@
+{% extends "public/templates/public_template.html" %}
+
+{% block title %}Upload{% endblock %}
+
+{% block main %}
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+
+      <h1>Upload an image</h1>
+      <hr>
+
+      <form action="/stamp-identify/upload" method="POST" enctype="multipart/form-data">
+
+        <div class="form-group">
+          <label>Select image</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" name="image" id="image">
+          </div>
+          <select name= labels method="GET" action="/">
+            {% for label in labels %}
+              <option value= "{{label}}" SELECTED>{{ label }}</option>"
+            {% endfor %}
+          </select>
+          <input name="new_label" id="new_label">
+
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+
+      </form>
+
+      <form action="/stamp-identify/identify" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label>Select image</label>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" name="test_image" id="test_image">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

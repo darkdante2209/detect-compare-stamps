@@ -1,0 +1,55 @@
+
+{
+  "Stamps": [
+    {
+      "path": "raw_image/capnuoccantho1.jpeg",
+      "id": "01",
+      "organization": "capnuoccantho"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    },
+    {
+      "path": "0",
+      "id": "callback",
+      "organization": "foo1"
+    }
+  ]
+}
